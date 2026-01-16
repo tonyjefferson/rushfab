@@ -770,27 +770,23 @@
             const container = document.getElementById('thickness-options');
             const material = MATERIALS.find(m => m.id === state.selectedMaterial.id);
             
-            // Remove any existing click handler
-            const newContainer = container.cloneNode(false);
-            container.parentNode.replaceChild(newContainer, container);
+            // Clear previous content and handlers
+            container.innerHTML = '';
             
-            newContainer.innerHTML = material.thicknesses.map((thickness, index) => `
-                <button 
-                    class="thickness-btn ${state.selectedThickness === thickness ? 'selected' : ''}" 
-                    data-thickness="${thickness}"
-                    data-index="${index}"
-                >
-                    ${thickness}
-                </button>
-            `).join('');
-            
-            // Use event delegation on the container
-            newContainer.addEventListener('click', function(e) {
-                if (e.target.classList.contains('thickness-btn')) {
+            // Create buttons
+            material.thicknesses.forEach((thickness, index) => {
+                const btn = document.createElement('button');
+                btn.className = `thickness-btn ${state.selectedThickness === thickness ? 'selected' : ''}`;
+                btn.textContent = thickness;
+                btn.dataset.thickness = thickness;
+                btn.dataset.index = index;
+                
+                btn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const thickness = e.target.dataset.thickness;
                     selectThickness(thickness);
-                }
+                });
+                
+                container.appendChild(btn);
             });
         }
 
@@ -842,7 +838,7 @@
 
         function selectThickness(thickness) {
             state.selectedThickness = thickness;
-            renderThicknesses();
+            renderThicknesses(); // Re-render to show selected state
             document.getElementById('continue-to-review').disabled = false;
         }
 
