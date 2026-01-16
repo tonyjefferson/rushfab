@@ -795,7 +795,7 @@
             }
             
             const previewCanvas = document.getElementById('preview-canvas-4');
-            previewCanvas.innerHTML = state.selectedTemplate.svg;
+            previewCanvas.innerHTML = `<div style="width: 50%; max-width: 400px;">${state.selectedTemplate.svg}</div>`;
             
             const reviewInfo = document.getElementById('review-info');
             reviewInfo.innerHTML = `
@@ -1011,7 +1011,7 @@
             // Render step-specific content
             if (stepNum === 2) {
                 const canvas = document.getElementById('preview-canvas-2');
-                canvas.innerHTML = state.selectedTemplate.svg;
+                canvas.innerHTML = `<div style="width: 60%; max-width: 400px;">${state.selectedTemplate.svg}</div>`;
                 renderDimensionControls();
             } else if (stepNum === 3) {
                 renderMaterials();
